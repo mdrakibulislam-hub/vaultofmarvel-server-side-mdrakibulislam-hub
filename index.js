@@ -47,6 +47,11 @@ async function run() {
 
         })
 
+        app.get("/alltoys", async (req, res) => {
+            const toys = await toysdataapi.find({}).toArray();
+            res.send(toys);
+        })
+
 
 
         // await client.db("admin").command({ ping: 1 });
