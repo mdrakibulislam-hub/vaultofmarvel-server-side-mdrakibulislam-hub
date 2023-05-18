@@ -47,10 +47,46 @@ async function run() {
 
         })
 
+
+        // :::::::::get toy data::::::::::
+
         app.get("/alltoys", async (req, res) => {
             const toys = await toysdataapi.find({}).toArray();
             res.send(toys);
         })
+
+        // ::::::::::: get gotg data :::::::::::
+
+        app.get("/alltoys/subcategory/gotg", async (req, res) => {
+            const query = { "subCategory": "Guardians of the Galaxy" };
+            const gotgToys = await toysdataapi.find(query).toArray();
+            res.send(gotgToys)
+        })
+
+        // ::::::::::: get thor data :::::::::::::
+
+        app.get("/alltoys/subcategory/thor", async (req, res) => {
+            const query = { "subCategory": "Thor" };
+            const thorToys = await toysdataapi.find(query).toArray();
+            res.send(thorToys);
+        })
+
+        // ::::::::::::: get black panther data ::::::::::::::::
+
+        app.get("/alltoys/subcatrgory/blackpanther", async (req, res) => {
+            const query = { "subCategory": "Black Panther" };
+            const blackPantherToys = await toysdataapi.find(query).toArray();
+            res.send(blackPantherToys);
+        })
+
+        // ::::::::::::: get Iron Man data ::::::::::::::::
+
+        app.get("/alltoys/subcatrgory/ironman", async (req, res) => {
+            const query = { "subCategory": "Iron Man" };
+            const ironManToys = await toysdataapi.find(query).toArray();
+            res.send(ironManToys);
+        })
+
 
 
 
