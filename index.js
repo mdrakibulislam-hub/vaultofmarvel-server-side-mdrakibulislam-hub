@@ -15,7 +15,6 @@ app.use(express.json());
 
 //::::::::::mongodb:::::::::::
 
-
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.eqiwocl.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -51,13 +50,20 @@ async function run() {
         // :::::::::get toy data::::::::::
 
         app.get("/alltoys", async (req, res) => {
-            const toys = await toysdataapi.find({}).toArray();
-            res.send(toys);
+            const query = req.query.email
+            console.log(query);
+            if (query) {
+                const toys = await toysdataapi.find({ "email": `${query}` }).toArray();
+                res.send(toys);
+            } else {
+                const toys = await toysdataapi.find({}).toArray();
+                res.send(toys);
+            }
         })
 
         // ::::::::::: get gotg data :::::::::::
 
-        app.get("/alltoys/subcategory/gotg", async (req, res) => {
+        app.get("/alltoys/subcatrgory/gotg", async (req, res) => {
             const query = { "subCategory": "Guardians of the Galaxy" };
             const gotgToys = await toysdataapi.find(query).toArray();
             res.send(gotgToys)
@@ -65,7 +71,7 @@ async function run() {
 
         // ::::::::::: get thor data :::::::::::::
 
-        app.get("/alltoys/subcategory/thor", async (req, res) => {
+        app.get("/alltoys/subcatrgory/thor", async (req, res) => {
             const query = { "subCategory": "Thor" };
             const thorToys = await toysdataapi.find(query).toArray();
             res.send(thorToys);
@@ -87,7 +93,9 @@ async function run() {
             res.send(ironManToys);
         })
 
+
         // ::::::::::::: get single data ::::::::::::::
+
         app.get("/alltoys/toys/:id", async (req, res) => {
             const id = req.params.id;
             console.log(id);
