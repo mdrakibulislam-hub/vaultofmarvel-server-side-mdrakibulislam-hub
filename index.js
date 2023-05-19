@@ -116,6 +116,24 @@ async function run() {
         })
 
 
+        // :::::::::::::update data by id::::::::::::::
+
+        app.put("/update/:id", async (req, res) => {
+            const id = req.params.id
+            const body = req.body
+            console.log(body);
+            const filter = { _id: new ObjectId(id) }
+            const updateDoc = {
+                $set: {
+                    price: body.price,
+                    quantity: body.quantity,
+                    description: body.description,
+                },
+            };
+            const result = await toysdataapi.updateOne(filter, updateDoc);
+            res.send(result)
+        })
+
 
 
         // await client.db("admin").command({ ping: 1 });
