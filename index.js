@@ -105,6 +105,17 @@ async function run() {
         })
 
 
+        // ::::::::::::: get single data ::::::::::::::
+
+        app.delete("/alltoys/toys/:id", async (req, res) => {
+            const id = req.params.id;
+            console.log(id);
+            const query = { _id: new ObjectId(id) };
+            const result = await toysdataapi.deleteOne(query);
+            res.send(result)
+        })
+
+
 
 
         // await client.db("admin").command({ ping: 1 });
