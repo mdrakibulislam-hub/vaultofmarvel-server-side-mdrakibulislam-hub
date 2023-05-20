@@ -105,7 +105,7 @@ async function run() {
         })
 
 
-        // ::::::::::::: get single data ::::::::::::::
+        // ::::::::::::: delete single data ::::::::::::::
 
         app.delete("/alltoys/toys/:id", async (req, res) => {
             const id = req.params.id;
@@ -131,6 +131,16 @@ async function run() {
                 },
             };
             const result = await toysdataapi.updateOne(filter, updateDoc);
+            res.send(result)
+        })
+
+        // ::::::::::::::::: search product by name ::::::::::::::::
+
+        app.get("/alltoys/search/:name", async (req, res) => {
+            const name = req.params.name;
+            console.log(name);
+            const query = { "name": { $regex: name } }
+            const result = await toysdataapi.find(query).toArray();
             res.send(result)
         })
 
