@@ -139,7 +139,7 @@ async function run() {
         app.get("/alltoys/search/:name", async (req, res) => {
             const name = req.params.name;
             console.log(name);
-            const query = { "name": { $regex: name } }
+            const query = { "name": { $regex: name, $options: 'i' } }
             const result = await toysdataapi.find(query).toArray();
             res.send(result)
         })
