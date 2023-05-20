@@ -50,10 +50,30 @@ async function run() {
         // :::::::::get toy data::::::::::
 
         app.get("/alltoys", async (req, res) => {
+            const queryMail = req.query.email
+            const querySort = req.query.sort
+            console.log(queryMail, querySort);
+            if (queryMail) {
+                if (querySort) {
+                    const toys = await toysdataapi.find({ "email": `${queryMail}` }).sort({ "price": -1 }).toArray();
+                    res.send(toys);
+                } else {
+                    const toys = await toysdataapi.find({ "email": `${queryMail}` }).toArray();
+                    res.send(toys);
+                }
+            } else {
+                const toys = await toysdataapi.find({}).toArray();
+                res.send(toys);
+            }
+        })
+
+        // ::::::::::: get query dat by ascending order :::::::::::::
+
+        app.get("/alltoys", async (req, res) => {
             const query = req.query.email
             console.log(query);
             if (query) {
-                const toys = await toysdataapi.find({ "email": `${query}` }).toArray();
+                const toys = await toysdataapi.find({ "email": `${query}` }).sort({ "price": -1 }).toArray();
                 res.send(toys);
             } else {
                 const toys = await toysdataapi.find({}).toArray();
